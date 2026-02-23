@@ -1,0 +1,20 @@
+# Chiave API — NON committare mai questo file
+api_config.json
+batch_ids_log.json
+annotazione_dil.log
+DIL_API_reasoning_log.jsonl
+
+# File di sistema macOS
+.DS_Store
+**/.DS_Store
+
+# File di sistema Windows
+Thumbs.db
+desktop.ini
+
+# File temporanei Python
+__pycache__/
+*.py[cod]
+*.pyo
+.env
+venv/

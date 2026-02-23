@@ -1,0 +1,10 @@
+Metrica,Valore
+Accuracy,56.40%
+Precision,56.96%
+Recall,52.40%
+Specificity,60.40%
+F1-Score,54.58%
+True Positives,131
+True Negatives,151
+False Positives,99
+False Negatives,119

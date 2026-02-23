@@ -1,0 +1,78 @@
+═══════════════════════════════════════════════════════════════════════
+ PROMPT BREVE - ANNOTAZIONE DIL CON CLAUDE SONNET
+═══════════════════════════════════════════════════════════════════════
+
+TASK
+────────────────────────────────────────────────────────────────────────
+Annota 500 trigrammi (gruppi di 3 frasi) identificando la presenza di
+Discorso Indiretto Libero (DIL) in testi narrativi italiani 1850-1929.
+
+File input:  corpus_labelled-trigrams_500_LLM_annotated.csv
+File output: corpus_labelled-trigrams_500_Sonnet_v2_annotated.csv
+Nuova colonna: DIL_Sonnet_v2 (yes/no)
+
+
+DEFINIZIONE DIL
+────────────────────────────────────────────────────────────────────────
+Rappresentazione pensiero/discorso di un personaggio SENZA verbi
+dichiarativi espliciti ('pensò', 'disse').
+
+Caratteristiche:
+✓ Terza persona
+✓ Assenza verbi introduttivi
+✓ Punto di vista del personaggio
+✓ Può includere: interiezioni, esclamazioni, interrogative retoriche
+✓ Lessico del personaggio
+
+Esempi:
+✓ "Mario guardò l'orologio. Sempre in ritardo, come al solito!"
+✓ "Che assurdità! Come poteva essere successo?"
+✗ "Giovanni pensò che era tardi." (verbo dichiarativo presente)
+✗ "Il pontefice morì." (narrazione oggettiva)
+
+
+ISTRUZIONI
+────────────────────────────────────────────────────────────────────────
+1. Usa il TUO VERO RAGIONAMENTO LINGUISTICO (no pattern matching!)
+2. Leggi ogni trigramma attentamente
+3. Rispondi yes/no per presenza DIL
+4. Salva ogni 50 righe
+5. Al termine calcola metriche vs gold standard
+
+Python snippet:
+```python
+import pandas as pd
+
+df = pd.read_csv('corpus_labelled-trigrams_500_LLM_annotated.csv')
+df['DIL_Sonnet_v2'] = ''
+
+for idx, row in df.iterrows():
+    # ANALIZZA con tuo ragionamento LLM
+    dil = 'yes' if [tua valutazione] else 'no'
+    df.at[idx, 'DIL_Sonnet_v2'] = dil
+
+    if (idx + 1) % 50 == 0:
+        df.to_csv('corpus_labelled-trigrams_500_Sonnet_v2_annotated.csv',
+                  index=False, encoding='utf-8')
+
+# Metriche finali
+accuracy = (df['DIL'] == df['DIL_Sonnet_v2']).sum() / len(df)
+agreement_prev = (df['DIL_Sonnet'] == df['DIL_Sonnet_v2']).sum() / len(df)
+print(f"Accuracy vs gold: {accuracy:.2%}")
+print(f"Agreement con v1: {agreement_prev:.2%}")
+```
+
+
+METRICHE DA CALCOLARE
+────────────────────────────────────────────────────────────────────────
+1. Accuracy, Precision, Recall, F1 vs gold (colonna DIL)
+2. Confusion matrix (TP, TN, FP, FN)
+3. Accordo inter-annotatore con DIL_Sonnet
+4. Analisi disaccordi
+
+
+OUTPUT RICHIESTO
+────────────────────────────────────────────────────────────────────────
+1. CSV con colonna DIL_Sonnet_v2
+2. Report metriche
+3. Breve analisi pattern osservati

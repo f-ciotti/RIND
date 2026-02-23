@@ -1,0 +1,72 @@
+{
+  "false_positives": {
+    "count": 154,
+    "markers": {
+      "shift_temporale": 115,
+      "sintassi_frammentata": 124,
+      "puntini_sospensione": 63,
+      "interrogative_retoriche": 36,
+      "esclamazioni_emotive": 6,
+      "verbi_dichiarativi": 6,
+      "interiezioni": 8,
+      "lessico_soggettivo": 4,
+      "modalizzatori": 1
+    },
+    "examples_indices": [
+      2,
+      5,
+      6,
+      9,
+      14,
+      16,
+      18,
+      19,
+      20,
+      22
+    ]
+  },
+  "false_negatives": {
+    "count": 52,
+    "markers": {
+      "shift_temporale": 27,
+      "verbi_dichiarativi": 4,
+      "sintassi_frammentata": 11,
+      "puntini_sospensione": 3,
+      "interrogative_retoriche": 1
+    },
+    "examples_indices": [
+      13,
+      34,
+      37,
+      38,
+      44,
+      45,
+      46,
+      49,
+      50,
+      55
+    ]
+  },
+  "disagreements": {
+    "total": 272,
+    "v2_better": 142,
+    "v1_better": 130
+  },
+  "true_positives": {
+    "count": 198,
+    "markers": {
+      "interrogative_retoriche": 67,
+      "shift_temporale": 174,
+      "sintassi_frammentata": 162,
+      "esclamazioni_emotive": 10,
+      "puntini_sospensione": 74,
+      "interiezioni": 15,
+      "verbi_dichiarativi": 20,
+      "modalizzatori": 3,
+      "lessico_soggettivo": 1
+    }
+  },
+  "true_negatives": {
+    "count": 96
+  }
+}

@@ -1,0 +1,106 @@
+════════════════════════════════════════════════════════════════════
+  TEST GPT-5.2 CON REASONING LOW - ISTRUZIONI RAPIDE
+════════════════════════════════════════════════════════════════════
+
+PREREQUISITO
+────────────────────────────────────────────────────────────────────
+Chiave API OpenAI da: https://platform.openai.com/api-keys
+
+
+ESECUZIONE (2 COMANDI)
+────────────────────────────────────────────────────────────────────
+
+1. Imposta la chiave API:
+
+   export OPENAI_API_KEY='sk-proj-XXXXXXXXXXXXXXXX'
+
+2. Esegui il test:
+
+   ./test_gpt52_low.sh
+
+
+OPPURE IN UN SOLO COMANDO
+────────────────────────────────────────────────────────────────────
+
+OPENAI_API_KEY='sk-proj-XXX' ./test_gpt52_low.sh
+
+
+COSA FA LO SCRIPT
+────────────────────────────────────────────────────────────────────
+✓ Verifica chiave API
+✓ Installa/aggiorna dipendenze Python (openai, pandas, tqdm)
+✓ Verifica file di input
+✓ Mostra stima costi (~$0.85)
+✓ Chiede conferma
+✓ Esegue annotazione con GPT-5.2 (reasoning effort LOW)
+✓ Calcola metriche vs annotazioni umane
+✓ Confronta con Claude Sonnet
+✓ Salva risultati
+
+
+OUTPUT ATTESO
+────────────────────────────────────────────────────────────────────
+File generati:
+
+1. corpus_labelled-trigrams_500_DUAL_annotated.csv
+   → CSV con 3 colonne di annotazioni:
+     - DIL          (umano - gold standard)
+     - DIL_Sonnet   (Claude Sonnet 4.5)
+     - DIL_gpt_5_2  (GPT-5.2 reasoning LOW)
+
+2. corpus_labelled-trigrams_500_DUAL_annotated_metrics_gpt_5_2.json
+   → Metriche di performance:
+     - Accuracy, Precision, Recall, F1-Score
+     - Matrice di confusione
+
+3. corpus_labelled-trigrams_500_DUAL_annotated_comparison_gpt_5_2.json
+   → Confronto Claude Sonnet vs GPT-5.2:
+     - Tasso di accordo
+     - Distribuzione disaccordi
+
+
+TEMPO E COSTI
+────────────────────────────────────────────────────────────────────
+Tempo:  45-60 minuti
+Costo:  ~$0.85-1.00
+Tokens: ~450,000
+
+
+TROUBLESHOOTING
+────────────────────────────────────────────────────────────────────
+
+ERRORE: "Unknown model gpt-5.2"
+→ GPT-5.2 non disponibile nel tuo account
+→ Verifica tier su https://platform.openai.com/
+→ Prova con gpt-4o invece
+
+ERRORE: "Invalid API key"
+→ Chiave non valida o scaduta
+→ Genera nuova chiave su https://platform.openai.com/api-keys
+
+ERRORE: "Insufficient credits"
+→ Credito insufficiente nell'account
+→ Ricarica su https://platform.openai.com/account/billing
+
+ERRORE: "Rate limit exceeded"
+→ Troppe richieste
+→ Attendi qualche minuto e riprova
+→ Lo script ha resume automatico
+
+
+ALTERNATIVE
+────────────────────────────────────────────────────────────────────
+
+Se GPT-5.2 non è disponibile, usa GPT-4o:
+
+python3 annotate_dil_gpt_500_v2.py \
+    --api-key $OPENAI_API_KEY \
+    --model gpt-4o \
+    --eval --compare
+
+Costo identico (~$0.85), performance simili.
+
+
+DOMANDE?
+────────────────────────────────────────────────────────────────────
+Documentazione completa: AGGIORNAMENTO_GPT52.md
