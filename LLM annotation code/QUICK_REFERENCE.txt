@@ -1,0 +1,156 @@
+═══════════════════════════════════════════════════════════════════
+                    ANNOTAZIONE DIL - QUICK REFERENCE
+═══════════════════════════════════════════════════════════════════
+
+📁 FILE PRINCIPALI
+─────────────────────────────────────────────────────────────────
+  annotate_dil.py          Script annotazione completa
+  test_annotate.py         Test su campione
+  config.json              Configurazione (inserisci API key!)
+
+  deploy_to_vm.sh          Deployment automatico a VM
+  setup_vm.sh              Setup VM (eseguito automaticamente)
+  vm_helpers.sh            Comandi helper
+
+  GUIDA_AWS_PASSO_PASSO.md      Setup AWS dettagliato
+  README_DEPLOYMENT_AWS.md      Overview completa
+  README_ANNOTAZIONE.md         Dettagli annotazione
+
+═══════════════════════════════════════════════════════════════════
+🚀 WORKFLOW RAPIDO (3 STEP)
+═══════════════════════════════════════════════════════════════════
+
+1️⃣  CONFIGURA API KEY
+   ├─ Apri config.json
+   └─ Sostituisci "YOUR_API_KEY_HERE" con tua chiave Anthropic
+
+2️⃣  CREA VM AWS
+   ├─ Segui GUIDA_AWS_PASSO_PASSO.md (10 min)
+   ├─ Ottieni IP pubblico (es. 54.123.45.67)
+   └─ Scarica chiave SSH (es. dil-key.pem)
+
+3️⃣  DEPLOY AUTOMATICO
+   └─ bash deploy_to_vm.sh <IP> <chiave_ssh>
+
+═══════════════════════════════════════════════════════════════════
+💻 COMANDI ESSENZIALI
+═══════════════════════════════════════════════════════════════════
+
+▶ DEPLOYMENT
+  bash deploy_to_vm.sh 54.123.45.67 ~/dil-key.pem
+
+▶ CONNESSIONE SSH
+  ssh -i ~/dil-key.pem ubuntu@54.123.45.67
+
+▶ TEST PRELIMINARE (sulla VM)
+  cd ~/dil_project
+  python3 test_annotate.py
+
+▶ AVVIO ANNOTAZIONE (sulla VM)
+  screen -S dil_annotation
+  python3 annotate_dil.py
+  [Ctrl+A poi D per detach]
+
+▶ MONITORAGGIO (dal tuo computer)
+  source vm_helpers.sh
+  vm_monitor          # Stato corrente
+  vm_logs             # Log real-time
+  vm_stats            # Progresso e costi
+
+▶ DOWNLOAD RISULTATI
+  vm_download ./risultati
+
+▶ COMANDI SCREEN
+  screen -ls                    # Lista sessioni
+  screen -r dil_annotation      # Riattacca
+  Ctrl+A poi D                  # Detach
+  exit                          # Termina sessione
+
+═══════════════════════════════════════════════════════════════════
+📊 STIME
+═══════════════════════════════════════════════════════════════════
+
+  Corpus:        536.676 chunk (500 file CSV)
+  Costo API:     ~$225 (output binario YES/NO)
+  Costo VM:      ~$2/settimana (t3.micro)
+
+  Tempo (Tier 2):  ~7 giorni
+  Tempo (Tier 3):  ~3 giorni
+  Tempo (Tier 4):  ~2 giorni
+
+═══════════════════════════════════════════════════════════════════
+🔧 HELPER COMMANDS (dopo source vm_helpers.sh)
+═══════════════════════════════════════════════════════════════════
+
+  vm_connect      Connetti SSH
+  vm_monitor      Stato annotazione
+  vm_logs         Log real-time
+  vm_stats        Statistiche e costi
+  vm_tail [N]     Ultimi N log
+  vm_attach       Riattacca screen
+  vm_download     Download risultati
+  vm_disk         Verifica spazio
+  vm_help         Mostra tutti i comandi
+
+═══════════════════════════════════════════════════════════════════
+⚠️  TROUBLESHOOTING
+═══════════════════════════════════════════════════════════════════
+
+  "Permission denied (publickey)"
+  → chmod 400 /path/to/key.pem
+
+  "Connection refused"
+  → Verifica security group AWS (porta 22, tuo IP)
+
+  Script deployment fallisce
+  → Verifica API key in config.json
+
+  Rate limit continuo
+  → Riduci max_concurrent_requests in config.json
+
+  VM non risponde
+  → Normale, usa vm_monitor per verificare
+
+═══════════════════════════════════════════════════════════════════
+📍 FILE SULLA VM
+═══════════════════════════════════════════════════════════════════
+
+  ~/dil_project/
+  ├── annotate_dil.py
+  ├── test_annotate.py
+  ├── config.json
+  ├── chunk/                    (input)
+  ├── chunk_annotated/          (output)
+  ├── annotation_state.json     (checkpoint)
+  └── logs/
+      └── annotation.log
+
+═══════════════════════════════════════════════════════════════════
+🎯 CHECKLIST PRE-LANCIO
+═══════════════════════════════════════════════════════════════════
+
+  ☐ API key Anthropic configurata
+  ☐ VM AWS creata e accessibile
+  ☐ Test preliminare OK
+  ☐ Qualità annotazioni validata
+  ☐ Budget approvato (~$225)
+  ☐ Screen session avviata
+  ☐ Primo checkpoint salvato
+
+═══════════════════════════════════════════════════════════════════
+📞 SUPPORTO
+═══════════════════════════════════════════════════════════════════
+
+  Documenta errori con:
+  1. Fase/comando eseguito
+  2. Messaggio errore completo
+  3. Output di vm_monitor o log
+
+  Risorse:
+  - Anthropic: https://docs.anthropic.com
+  - AWS EC2: https://docs.aws.amazon.com/ec2/
+  - Screen: man screen
+
+═══════════════════════════════════════════════════════════════════
+Versione 1.0 - Febbraio 2026
+═══════════════════════════════════════════════════════════════════
