@@ -1,0 +1,12 @@
+{
+  "anthropic_api_key": "your api key here",
+ "model": "claude-sonnet-4-5-20250929",
+  "max_concurrent_requests": 5,
+  "max_retries": 3,
+  "retry_delay": 2,
+  "checkpoint_interval": 1000,
+  "input_dir": "./chunk",
+  "output_dir": "./chunk_annotated",
+  "state_file": "./annotation_state.json",
+  "log_file": "./annotation.log"
+}
